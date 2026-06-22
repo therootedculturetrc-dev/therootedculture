@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Your Own – The Rooted Culture™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0a0a0a; --white: #ffffff; --off-white: #f5f4f0;
+    --accent: #c8a96e; --grey: #888; --light-grey: #e8e6e1; --text: #1a1a1a;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  body { font-family: var(--font-body); color: var(--text); background: var(--white); overflow-x: hidden; }
+  .announcement-bar { background: var(--black); color: var(--white); text-align: center; padding: 10px; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; }
+  header { position: sticky; top: 0; z-index: 1000; background: var(--white); border-bottom: 1px solid var(--light-grey); }
+  .header-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1400px; margin: 0 auto; padding: 0 24px; height: 64px; }
+  .nav-left { display: flex; align-items: center; gap: 32px; }
+  .nav-left a { font-size: 13px; font-weight: 500; letter-spacing: 0.5px; text-decoration: none; color: var(--text); text-transform: uppercase; transition: color 0.2s; }
+  .nav-left a:hover, .nav-left a.active { color: var(--accent); }
+  .logo { font-family: var(--font-display); font-size: 26px; letter-spacing: 2px; color: var(--black); text-decoration: none; position: absolute; left: 50%; transform: translateX(-50%); }
+  .nav-right { display: flex; align-items: center; gap: 20px; }
+  .nav-right button { background: none; border: none; cursor: pointer; font-size: 13px; font-weight: 500; letter-spacing: 0.5px; color: var(--text); text-transform: uppercase; display: flex; align-items: center; gap: 6px; transition: color 0.2s; font-family: var(--font-body); }
+  .nav-right button:hover { color: var(--accent); }
+  .cart-btn { position: relative; }
+  .cart-count { background: var(--black); color: var(--white); font-size: 10px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: absolute; top: -8px; right: -8px; font-weight: 700; }
+  .rewards-badge { background: var(--accent); color: var(--black); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.5px; text-decoration: none; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--black); }
+
+  /* PAGE HERO */
+  .page-hero {
+    background: var(--black); color: var(--white);
+    padding: 100px 24px 80px; text-align: center;
+    background-image: url('https://www.therootedculture.com/cdn/shop/files/ChatGPT_Image_May_14_2026_05_48_27_PM.png?v=1778760948&width=2000');
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.65); }
+  .page-hero * { position: relative; z-index: 1; }
+  .page-hero .eyebrow { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+  .page-hero h1 { font-family: var(--font-display); font-size: clamp(52px, 9vw, 110px); letter-spacing: 4px; text-transform: uppercase; line-height: 0.9; margin-bottom: 20px; }
+  .page-hero p { font-family: var(--font-serif); font-style: italic; font-size: 18px; color: rgba(255,255,255,0.75); max-width: 600px; margin: 0 auto 40px; }
+
+  /* STEPS */
+  .how-it-works { padding: 80px 24px; background: var(--off-white); }
+  .how-it-works h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 60px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; max-width: 1000px; margin: 0 auto; }
+  .step { text-align: center; }
+  .step-num { font-family: var(--font-display); font-size: 72px; color: var(--accent); line-height: 1; margin-bottom: 12px; }
+  .step h3 { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .step p { font-size: 14px; color: var(--grey); line-height: 1.6; }
+
+  /* DESIGNER TOOL */
+  .designer-section { padding: 80px 24px; max-width: 1200px; margin: 0 auto; }
+  .designer-section h2 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .designer-section .subtitle { font-size: 14px; color: var(--grey); margin-bottom: 40px; }
+  .designer-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .tshirt-preview {
+    background: var(--off-white); aspect-ratio: 3/4;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; border: 1px solid var(--light-grey);
+  }
+  .tshirt-svg { width: 70%; height: 70%; }
+  .preview-text {
+    position: absolute; font-family: var(--font-display);
+    letter-spacing: 2px; text-transform: uppercase;
+    pointer-events: none; transition: all 0.3s;
+    text-align: center; max-width: 60%;
+  }
+  .designer-controls { display: flex; flex-direction: column; gap: 28px; }
+  .control-group label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .color-swatches { display: flex; flex-wrap: wrap; gap: 10px; }
+  .color-swatch {
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+    border: 3px solid transparent; transition: 0.2s;
+  }
+  .color-swatch.active { border-color: var(--black); transform: scale(1.15); }
+  .design-input { width: 100%; padding: 14px; border: 2px solid var(--light-grey); font-size: 16px; font-family: var(--font-display); letter-spacing: 2px; outline: none; text-transform: uppercase; transition: border-color 0.2s; }
+  .design-input:focus { border-color: var(--black); }
+  .font-select { width: 100%; padding: 12px 14px; border: 2px solid var(--light-grey); font-size: 14px; font-family: var(--font-body); outline: none; cursor: pointer; }
+  .text-color-swatches { display: flex; gap: 10px; }
+  .size-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+  .size-opt { padding: 10px 18px; border: 2px solid var(--light-grey); background: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: 0.2s; font-family: var(--font-body); }
+  .size-opt:hover, .size-opt.active { border-color: var(--black); background: var(--black); color: var(--white); }
+  .qty-control { display: flex; align-items: center; gap: 16px; }
+  .qty-btn { width: 40px; height: 40px; border: 2px solid var(--light-grey); background: none; font-size: 20px; cursor: pointer; transition: 0.2s; font-family: var(--font-body); }
+  .qty-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+  .qty-val { font-size: 20px; font-weight: 700; min-width: 32px; text-align: center; }
+  .design-price { font-size: 24px; font-weight: 700; }
+  .add-design-btn { width: 100%; background: var(--black); color: var(--white); padding: 18px; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; border: none; cursor: pointer; transition: 0.2s; font-family: var(--font-body); }
+  .add-design-btn:hover { background: var(--accent); color: var(--black); }
+  .design-note { font-size: 12px; color: var(--grey); text-align: center; margin-top: 10px; }
+
+  /* POSITION CONTROLS */
+  .position-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-width: 200px; }
+  .pos-btn { padding: 8px; border: 1px solid var(--light-grey); background: none; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; transition: 0.2s; font-family: var(--font-body); letter-spacing: 1px; }
+  .pos-btn.active, .pos-btn:hover { background: var(--black); color: var(--white); border-color: var(--black); }
+
+  /* FOOTER */
+  .newsletter { background: var(--off-white); padding: 60px 24px; text-align: center; }
+  .newsletter h2 { font-family: var(--font-display); font-size: clamp(28px, 5vw, 48px); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .newsletter p { color: var(--grey); font-size: 14px; margin-bottom: 28px; }
+  .newsletter-form { display: flex; gap: 0; max-width: 440px; margin: 0 auto; }
+  .newsletter-form input { flex: 1; padding: 14px 18px; border: 2px solid var(--black); font-size: 14px; font-family: var(--font-body); outline: none; }
+  .newsletter-form button { background: var(--black); color: var(--white); border: 2px solid var(--black); padding: 14px 24px; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: var(--font-body); }
+  footer { background: var(--black); color: var(--white); }
+  .footer-bottom { padding: 24px; text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+
+  /* CART DRAWER */
+  .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .cart-overlay.active { opacity: 1; pointer-events: all; }
+  .cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; max-width: 100vw; height: 100vh; background: var(--white); z-index: 9001; display: flex; flex-direction: column; transition: right 0.35s ease; box-shadow: -8px 0 32px rgba(0,0,0,0.15); }
+  .cart-drawer.active { right: 0; }
+  .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 24px; border-bottom: 1px solid var(--light-grey); }
+  .cart-header h2 { font-family: var(--font-display); font-size: 22px; letter-spacing: 2px; }
+  .cart-close { background: none; border: none; font-size: 22px; cursor: pointer; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 24px; }
+  .cart-empty { text-align: center; padding: 60px 0; color: var(--grey); }
+  .cart-empty h3 { font-family: var(--font-display); font-size: 24px; letter-spacing: 1px; margin-bottom: 12px; }
+  .cart-item { display: flex; gap: 16px; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--light-grey); }
+  .cart-item-img { width: 90px; height: 110px; object-fit: cover; flex-shrink: 0; background: var(--light-grey); }
+  .cart-item-details { flex: 1; }
+  .cart-item-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .cart-item-variant { font-size: 12px; color: var(--grey); margin-bottom: 8px; }
+  .cart-item-price { font-size: 15px; font-weight: 700; }
+  .cart-item-qty { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
+  .cart-item-qty button { background: none; border: 1px solid var(--light-grey); width: 28px; height: 28px; cursor: pointer; font-size: 16px; }
+  .cart-item-qty span { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+  .cart-remove { background: none; border: none; color: var(--grey); font-size: 12px; cursor: pointer; text-decoration: underline; margin-top: 6px; display: block; }
+  .cart-footer { padding: 24px; border-top: 1px solid var(--light-grey); }
+  .cart-subtotal { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 16px; font-weight: 700; }
+  .checkout-btn { width: 100%; background: var(--black); color: var(--white); padding: 18px; font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: none; cursor: pointer; }
+  .cart-note { font-size: 12px; color: var(--grey); text-align: center; margin-top: 12px; }
+  .toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--black); color: var(--white); padding: 14px 28px; font-size: 13px; font-weight: 600; z-index: 99999; transition: transform 0.4s ease; white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .mobile-nav { position: fixed; inset: 0; background: var(--white); z-index: 9999; transform: translateX(-100%); transition: transform 0.35s ease; padding: 80px 32px; display: flex; flex-direction: column; gap: 24px; }
+  .mobile-nav.active { transform: translateX(0); }
+  .mobile-nav-close { position: absolute; top: 20px; right: 24px; background: none; border: none; font-size: 24px; cursor: pointer; }
+  .mobile-nav a { font-family: var(--font-display); font-size: 36px; letter-spacing: 2px; text-decoration: none; color: var(--black); text-transform: uppercase; border-bottom: 1px solid var(--light-grey); padding-bottom: 16px; }
+  @media (max-width: 900px) { .nav-left { display: none; } .hamburger { display: flex; } .logo { position: static; transform: none; } .designer-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .newsletter-form { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">Design your perfect tee — Express your unique identity 🔥</div>
+
+<header>
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="collection.html">My Collection</a>
+      <a href="design.html" class="active">Design Your Own 🔥</a>
+    </nav>
+    <a href="index.html" class="logo">The Rooted Culture™</a>
+    <div class="nav-right">
+      <a href="#" class="rewards-badge">RR Rewards</a>
+      <button class="cart-btn" onclick="openCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Cart <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <div class="hamburger" onclick="openMobileNav()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="collection.html">My Collection</a>
+  <a href="design.html">Design Your Own 🔥</a>
+</nav>
+
+<section class="page-hero">
+  <p class="eyebrow">Express Yourself</p>
+  <h1>Design<br>Your Own</h1>
+  <p>Create a piece that's uniquely yours. Choose your style, add your text, make it personal.</p>
+</section>
+
+<section class="how-it-works">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Pick Your Tee</h3>
+      <p>Choose your preferred style, color, and base garment from our premium collection.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Add Your Text</h3>
+      <p>Type your message, slogan, or quote. Choose font, size, color, and placement.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Select Size</h3>
+      <p>Pick your size from XS to XXL. Check our size guide if you're unsure.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>We Print & Ship</h3>
+      <p>Your custom tee is printed on demand and shipped directly to your door within 5–7 days.</p>
+    </div>
+  </div>
+</section>
+
+<section class="designer-section">
+  <h2>T-Shirt Designer</h2>
+  <p class="subtitle">Live preview — customize and add to cart</p>
+
+  <div class="designer-layout">
+    <!-- PREVIEW -->
+    <div>
+      <div class="tshirt-preview" id="tshirtPreview">
+        <svg class="tshirt-svg" viewBox="0 0 200 240" id="tshirtSvg">
+          <path id="tshirtShape" d="M30 40 L0 80 L40 90 L40 220 L160 220 L160 90 L200 80 L170 40 L130 60 Q100 70 70 60 Z" fill="#f5f4f0" stroke="#ccc" stroke-width="1"/>
+        </svg>
+        <div class="preview-text" id="previewText" style="font-size:20px;color:#1a1a1a;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+      </div>
+      <p style="font-size:12px;color:#888;text-align:center;margin-top:8px;">Live Preview</p>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="designer-controls">
+      <div class="control-group">
+        <label>Tee Color</label>
+        <div class="color-swatches" id="teeColors">
+          <div class="color-swatch active" style="background:#f5f4f0;border:1px solid #ccc" onclick="setTeeColor('#f5f4f0', this)" title="White"></div>
+          <div class="color-swatch" style="background:#1a1a1a" onclick="setTeeColor('#1a1a1a', this)" title="Black"></div>
+          <div class="color-swatch" style="background:#c8a96e" onclick="setTeeColor('#c8a96e', this)" title="Tan"></div>
+          <div class="color-swatch" style="background:#2d5a4e" onclick="setTeeColor('#2d5a4e', this)" title="Forest Green"></div>
+          <div class="color-swatch" style="background:#8b1a1a" onclick="setTeeColor('#8b1a1a', this)" title="Maroon"></div>
+          <div class="color-swatch" style="background:#1a3a5c" onclick="setTeeColor('#1a3a5c', this)" title="Navy"></div>
+          <div class="color-swatch" style="background:#e8d5c4" onclick="setTeeColor('#e8d5c4', this)" title="Beige"></div>
+          <div class="color-swatch" style="background:#6b4c3b" onclick="setTeeColor('#6b4c3b', this)" title="Brown"></div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Your Text</label>
+        <input class="design-input" id="designText" type="text" placeholder="TYPE YOUR MESSAGE" maxlength="30" oninput="updatePreview()">
+        <p style="font-size:11px;color:#888;margin-top:6px;">Max 30 characters</p>
+      </div>
+
+      <div class="control-group">
+        <label>Font Style</label>
+        <select class="font-select" id="fontSelect" onchange="updatePreview()">
+          <option value="'Bebas Neue', sans-serif">Display Bold</option>
+          <option value="'Inter', sans-serif">Clean Modern</option>
+          <option value="'Playfair Display', serif">Elegant Serif</option>
+          <option value="monospace">Monospace</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label>Text Color</label>
+        <div class="text-color-swatches" id="textColors">
+          <div class="color-swatch active" style="background:#1a1a1a" onclick="setTextColor('#1a1a1a', this)"></div>
+          <div class="color-swatch" style="background:#ffffff;border:1px solid #ccc" onclick="setTextColor('#ffffff', this)"></div>
+          <div class="color-swatch" style="background:#c8a96e" onclick="setTextColor('#c8a96e', this)"></div>
+          <div class="color-swatch" style="background:#c0392b" onclick="setTextColor('#c0392b', this)"></div>
+          <div class="color-swatch" style="background:#2d5a4e" onclick="setTextColor('#2d5a4e', this)"></div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Text Position</label>
+        <div class="position-btns">
+          <button class="pos-btn" onclick="setPosition('top-left', this)">↖</button>
+          <button class="pos-btn active" onclick="setPosition('top-center', this)">↑</button>
+          <button class="pos-btn" onclick="setPosition('top-right', this)">↗</button>
+          <button class="pos-btn" onclick="setPosition('mid-left', this)">←</button>
+          <button class="pos-btn" onclick="setPosition('center', this)">⊕</button>
+          <button class="pos-btn" onclick="setPosition('mid-right', this)">→</button>
+          <button class="pos-btn" onclick="setPosition('bot-left', this)">↙</button>
+          <button class="pos-btn" onclick="setPosition('bot-center', this)">↓</button>
+          <button class="pos-btn" onclick="setPosition('bot-right', this)">↘</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Select Size</label>
+        <div class="size-selector">
+          <button class="size-opt" onclick="selectSize(this)">XS</button>
+          <button class="size-opt" onclick="selectSize(this)">S</button>
+          <button class="size-opt active" onclick="selectSize(this)">M</button>
+          <button class="size-opt" onclick="selectSize(this)">L</button>
+          <button class="size-opt" onclick="selectSize(this)">XL</button>
+          <button class="size-opt" onclick="selectSize(this)">XXL</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label>Quantity</label>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQtyDesign(-1)">−</button>
+          <span class="qty-val" id="designQty">1</span>
+          <button class="qty-btn" onclick="changeQtyDesign(1)">+</button>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <div class="design-price">₹<span id="designTotalPrice">799</span></div>
+        <p style="font-size:12px;color:#888;margin-top:4px;">Base price for custom tee + print</p>
+      </div>
+
+      <button class="add-design-btn" onclick="addCustomToCart()">Add Custom Tee to Cart</button>
+      <p class="design-note">Your design will be reviewed before printing. We'll confirm via email.</p>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <h2>Join the Movement</h2>
+  <p>Get notified about new drops and exclusive offers.</p>
+  <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+    <input type="email" placeholder="Your email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-bottom">© 2026 The Rooted Culture™. All rights reserved.</div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header"><h2>Your Cart</h2><button class="cart-close" onclick="closeCart()">✕</button></div>
+  <div class="cart-items" id="cartItems"><div class="cart-empty"><h3>Your cart is empty</h3></div></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartTotal">₹0</span></div>
+    <button class="checkout-btn" onclick="showToast('Connect your payment gateway to enable checkout!')">Proceed to Checkout</button>
+    <p class="cart-note">Taxes and shipping calculated at checkout</p>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let designQty = 1;
+const basePrice = 799;
+let currentTeeColor = '#f5f4f0';
+let currentTextColor = '#1a1a1a';
+let currentPosition = 'top-center';
+let cart = JSON.parse(localStorage.getItem('trc_cart') || '[]');
+
+function saveCart() { localStorage.setItem('trc_cart', JSON.stringify(cart)); }
+
+function updateCartUI() {
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+  document.getElementById('cartCount').textContent = count;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString('en-IN');
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty"><h3>Your cart is empty</h3></div>';
+    footerEl.style.display = 'none';
+  } else {
+    footerEl.style.display = 'block';
+    itemsEl.innerHTML = cart.map((item, idx) => `
+      <div class="cart-item">
+        <div class="cart-item-img" style="background:${item.teeColor||'#f5f4f0'};display:flex;align-items:center;justify-content:center;color:${item.textColor||'#000'};font-size:11px;font-weight:700;text-align:center;padding:8px;">${item.customText||item.name}</div>
+        <div class="cart-item-details">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-variant">Size: ${item.size} ${item.customText?'| Text: "'+item.customText+'"':''}</div>
+          <div class="cart-item-price">₹${(item.price * item.qty).toLocaleString('en-IN')}</div>
+          <div class="cart-item-qty">
+            <button onclick="changeQty(${idx},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${idx},1)">+</button>
+          </div>
+          <button class="cart-remove" onclick="removeItem(${idx})">Remove</button>
+        </div>
+      </div>`).join('');
+  }
+}
+function changeQty(idx, d) { cart[idx].qty += d; if (cart[idx].qty <= 0) cart.splice(idx, 1); saveCart(); updateCartUI(); }
+function removeItem(idx) { cart.splice(idx, 1); saveCart(); updateCartUI(); }
+function openCart() { document.getElementById('cartDrawer').classList.add('active'); document.getElementById('cartOverlay').classList.add('active'); }
+function closeCart() { document.getElementById('cartDrawer').classList.remove('active'); document.getElementById('cartOverlay').classList.remove('active'); }
+
+function updatePreview() {
+  const text = document.getElementById('designText').value || '';
+  const font = document.getElementById('fontSelect').value;
+  const el = document.getElementById('previewText');
+  el.textContent = text;
+  el.style.fontFamily = font;
+  el.style.color = currentTextColor;
+}
+
+function setTeeColor(color, el) {
+  currentTeeColor = color;
+  document.getElementById('tshirtShape').setAttribute('fill', color);
+  document.querySelectorAll('#teeColors .color-swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setTextColor(color, el) {
+  currentTextColor = color;
+  document.getElementById('previewText').style.color = color;
+  document.querySelectorAll('#textColors .color-swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setPosition(pos, btn) {
+  currentPosition = pos;
+  document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const el = document.getElementById('previewText');
+  const positions = {
+    'top-left': 'top:20%;left:25%;transform:none',
+    'top-center': 'top:20%;left:50%;transform:translateX(-50%)',
+    'top-right': 'top:20%;right:25%;left:auto;transform:none',
+    'mid-left': 'top:50%;left:25%;transform:translateY(-50%)',
+    'center': 'top:50%;left:50%;transform:translate(-50%,-50%)',
+    'mid-right': 'top:50%;right:25%;left:auto;transform:translateY(-50%)',
+    'bot-left': 'bottom:20%;top:auto;left:25%;transform:none',
+    'bot-center': 'bottom:20%;top:auto;left:50%;transform:translateX(-50%)',
+    'bot-right': 'bottom:20%;top:auto;right:25%;left:auto;transform:none',
+  };
+  el.style.cssText = 'position:absolute;pointer-events:none;font-size:18px;letter-spacing:2px;text-transform:uppercase;text-align:center;max-width:60%;transition:all 0.3s;' + positions[pos] + ';color:' + currentTextColor + ';font-family:' + document.getElementById('fontSelect').value;
+}
+
+function selectSize(btn) {
+  document.querySelectorAll('.size-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function changeQtyDesign(d) {
+  designQty = Math.max(1, designQty + d);
+  document.getElementById('designQty').textContent = designQty;
+  document.getElementById('designTotalPrice').textContent = (basePrice * designQty).toLocaleString('en-IN');
+}
+
+function addCustomToCart() {
+  const text = document.getElementById('designText').value.trim();
+  const size = document.querySelector('.size-opt.active')?.textContent || 'M';
+  if (!text) { showToast('Please enter your text design'); return; }
+  cart.push({ id: Date.now(), name: 'Custom Tee', price: basePrice * designQty, size, qty: 1, customText: text, teeColor: currentTeeColor, textColor: currentTextColor });
+  saveCart(); updateCartUI(); showToast('Custom tee added to cart! ✓'); setTimeout(openCart, 300);
+}
+
+function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
+function handleSubscribe(e) { e.preventDefault(); showToast('Thanks for subscribing! 🎉'); e.target.reset(); }
+function openMobileNav() { document.getElementById('mobileNav').classList.add('active'); }
+function closeMobileNav() { document.getElementById('mobileNav').classList.remove('active'); }
+
+updateCartUI();
+</script>
+</body>
+</html>
