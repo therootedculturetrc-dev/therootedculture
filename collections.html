@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections – The Rooted Culture™</title>
+<meta name="description" content="Explore themed drops and curated collections from The Rooted Culture™.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root {
+    --font-body--family: 'Arimo', sans-serif;
+    --font-heading--family: 'Bevan', serif;
+    --color-background: #ffffff;
+    --color-foreground: #0a0f0e;
+    --color-foreground-heading: #000000;
+    --color-primary: #283e36;
+    --color-primary-button-background: #283e36;
+    --color-primary-button-text: #f1f3f3;
+    --color-primary-button-hover-background: #347f66;
+    --header-bg: #4a675d;
+    --header-text: #f1f3f3;
+    --header-border: #608578;
+    --mint: #a1d9c6;
+    --beige: #f5f1e8;
+    --dark-bg: #121212;
+    --dark-fg: #f1f3f3;
+    --off-white: #f1f3f3;
+    --grey: #608578;
+    --light-grey: #e8edeb;
+    --bg: var(--color-background);
+    --fg: var(--color-foreground);
+    --fg-heading: var(--color-foreground-heading);
+    --primary: var(--color-primary);
+    --btn-bg: var(--color-primary-button-background);
+    --btn-text: var(--color-primary-button-text);
+    --btn-hover-bg: var(--color-primary-button-hover-background);
+    --font-heading: var(--font-heading--family);
+    --font-body: var(--font-body--family);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font-body);color:var(--fg);background:var(--bg);overflow-x:hidden}
+  .announcement-bar{background:var(--primary);color:var(--off-white);text-align:center;padding:10px;font-size:12px;letter-spacing:1px;font-weight:500}
+  header{position:sticky;top:0;z-index:1000;background:var(--header-bg);border-bottom:1px solid var(--header-border)}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;padding:0 28px;height:68px}
+  .nav-left{display:flex;align-items:center;gap:28px}
+  .nav-left a{font-size:14px;text-decoration:none;color:var(--header-text);transition:color 0.2s}
+  .nav-left a:hover,.nav-left a.active{color:var(--mint)}
+  .logo{font-family:var(--font-body);font-size:17px;font-weight:700;color:var(--header-text);text-decoration:none;position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .nav-right button,.nav-right a.icon-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--header-text);display:flex;align-items:center;gap:6px;transition:color 0.2s;font-family:var(--font-body);text-decoration:none}
+  .nav-right svg{stroke:var(--header-text)}
+  .cart-btn{position:relative}
+  .cart-count{background:var(--mint);color:var(--primary);font-size:9px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-8px;right:-8px;font-weight:700}
+  .rewards-badge{background:var(--mint);color:var(--primary);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;text-decoration:none}
+  .rewards-rr{background:var(--primary);color:var(--mint);font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+  .hamburger span{width:24px;height:2px;background:var(--header-text)}
+
+  .collections-hero{background:var(--header-bg);padding:56px 24px;text-align:center}
+  .collections-hero span{color:var(--mint);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+  .collections-hero h1{font-family:var(--font-heading);color:#fff;font-size:clamp(32px,5.5vw,60px);margin-top:12px}
+
+  .collections-wrap{max-width:1300px;margin:0 auto;padding:56px 24px 96px}
+  .collections-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .collection-card{position:relative;aspect-ratio:4/5;overflow:hidden;text-decoration:none;display:block;background:var(--light-grey)}
+  .collection-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.5s}
+  .collection-card:hover img{transform:scale(1.05)}
+  .collection-card .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.1) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:24px}
+  .collection-card h3{font-family:var(--font-heading);color:#fff;font-size:22px;margin-bottom:4px}
+  .collection-card .count{color:rgba(255,255,255,0.75);font-size:12px}
+  .collection-card .no-image-fallback{width:100%;height:100%;background:var(--primary);display:flex;align-items:center;justify-content:center}
+  .collection-card .no-image-fallback span{font-family:var(--font-heading);color:var(--mint);font-size:24px}
+
+  .empty-state{text-align:center;padding:80px 24px}
+  .empty-state h2{font-family:var(--font-heading);font-size:28px;margin-bottom:12px;color:var(--fg-heading)}
+  .empty-state p{font-size:14px;color:var(--grey);max-width:400px;margin:0 auto 24px}
+  .empty-state a{display:inline-block;background:var(--btn-bg);color:var(--btn-text);padding:14px 32px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:0.2s}
+  .empty-state a:hover{background:var(--btn-hover-bg)}
+
+  footer{background:var(--dark-bg);color:var(--dark-fg)}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1400px;margin:0 auto;padding:72px 24px 48px}
+  .footer-logo{font-family:var(--font-body);font-size:17px;font-weight:700;display:block;margin-bottom:16px;color:#fff}
+  .footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:260px}
+  .footer-col h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:20px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:10px}
+  .footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none}
+  .footer-col ul li a:hover{color:#fff}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:24px;text-align:center;font-size:12px;color:rgba(255,255,255,0.25)}
+
+  .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary);color:#fff;padding:14px 28px;font-size:13px;font-weight:600;z-index:99999;transition:transform 0.4s;white-space:nowrap;border-radius:4px}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .mobile-nav{position:fixed;inset:0;background:#fff;z-index:9999;transform:translateX(-100%);transition:transform 0.35s;padding:80px 32px;display:flex;flex-direction:column;gap:4px}
+  .mobile-nav.active{transform:translateX(0)}
+  .mobile-nav-close{position:absolute;top:20px;right:24px;background:none;border:none;font-size:24px;cursor:pointer}
+  .mobile-nav a{font-family:var(--font-heading);font-size:32px;text-decoration:none;color:var(--fg-heading);border-bottom:1px solid var(--light-grey);padding:16px 0;display:block}
+
+  @media(max-width:900px){
+    .nav-left{display:none}.hamburger{display:flex}
+    .logo{position:static;transform:none}
+    .footer-top{grid-template-columns:1fr 1fr}
+    .collections-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:600px){
+    .footer-top{grid-template-columns:1fr}
+    .collections-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">✦ Free shipping on orders above ₹999 &nbsp;|&nbsp; New drops every Friday ✦</div>
+
+<header>
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="collection.html">My Collection</a>
+      <a href="collections.html" class="active">Collections</a>
+      <a href="design.html">Design Your Own 🔥</a>
+    </nav>
+    <a href="index.html" class="logo">The Rooted Culture™</a>
+    <div class="nav-right">
+      <a href="#" class="rewards-badge" onclick="showToast('Rooted Rewards coming soon!');return false">
+        <span class="rewards-rr">RR</span> Rooted Rewards
+      </a>
+      <a class="icon-btn" href="search.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a class="icon-btn" href="account.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="cart-btn" onclick="showToast('Visit the shop to view your cart 🛒')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <div class="hamburger" onclick="openMobileNav()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="collection.html">My Collection</a>
+  <a href="collections.html">Collections</a>
+  <a href="design.html">Design Your Own 🔥</a>
+  <a href="account.html">My Account</a>
+</nav>
+
+<div class="collections-hero">
+  <span>Curated Drops</span>
+  <h1>Shop by collection.</h1>
+</div>
+
+<div class="collections-wrap" id="collectionsWrap">
+  <div class="empty-state">
+    <h2>Loading collections…</h2>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">The Rooted Culture™</span>
+      <p>Wear what reflects you — chaos, calm, or everything in between. Urban streetwear rooted in culture.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="collection.html">All Products</a></li>
+        <li><a href="collections.html">Collections</a></li>
+        <li><a href="design.html">Design Your Own</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="account.html">My Orders</a></li>
+        <li><a href="account.html">Rooted Rewards</a></li>
+        <li><a href="account.html">Wishlist</a></li>
+        <li><a href="account.html">My Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 The Rooted Culture™. All rights reserved.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ---- CONFIGURE THIS after deploying the backend (see backend/README.md) ----
+const API_BASE = 'https://trc-development.onrender.com';
+// ------------------------------------------------------------------------
+
+let cart = JSON.parse(localStorage.getItem('trc_cart') || '[]');
+document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+function openMobileNav(){ document.getElementById('mobileNav').classList.add('active'); }
+function closeMobileNav(){ document.getElementById('mobileNav').classList.remove('active'); }
+
+async function loadCollections(){
+  const wrap = document.getElementById('collectionsWrap');
+  try {
+    const res = await fetch(API_BASE + '/api/collections');
+    if (!res.ok) throw new Error('Request failed');
+    const collections = await res.json();
+
+    if (!Array.isArray(collections) || !collections.length) {
+      wrap.innerHTML = `
+        <div class="empty-state">
+          <h2>Collections launching soon</h2>
+          <p>We're putting together themed drops. In the meantime, browse the full catalog.</p>
+          <a href="collection.html">Shop All Products</a>
+        </div>`;
+      return;
+    }
+
+    wrap.innerHTML = `<div class="collections-grid">` + collections.map(c => `
+      <a class="collection-card" href="collection.html?collection=${c.id}">
+        ${c.image
+          ? `<img src="${c.image}" alt="${c.name}" loading="lazy">`
+          : `<div class="no-image-fallback"><span>${c.name}</span></div>`}
+        <div class="overlay">
+          <h3>${c.name}</h3>
+          <div class="count">${c.product_count} item${c.product_count === 1 ? '' : 's'}</div>
+        </div>
+      </a>`).join('') + `</div>`;
+  } catch (err) {
+    wrap.innerHTML = `
+      <div class="empty-state">
+        <h2>Collections launching soon</h2>
+        <p>We're putting together themed drops. In the meantime, browse the full catalog.</p>
+        <a href="collection.html">Shop All Products</a>
+      </div>`;
+  }
+}
+loadCollections();
+</script>
+<script>
+function trcGetSessionId(){
+  var sid = sessionStorage.getItem('trc_sid');
+  if(!sid){ sid = 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,10); sessionStorage.setItem('trc_sid', sid); }
+  return sid;
+}
+function trcDeviceType(){
+  return /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+}
+function trcTrackEvent(eventType){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    fetch(trcApiBase + '/api/analytics/event', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: trcGetSessionId(), event_type: eventType })
+    }).catch(function(){});
+  } catch(e){}
+}
+(function(){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    var sid = trcGetSessionId();
+    var params = new URLSearchParams(window.location.search);
+    fetch(trcApiBase + '/api/analytics/track', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        path: window.location.pathname.split('/').pop() || 'index.html',
+        referrer: document.referrer || null,
+        session_id: sid,
+        utm_source: params.get('utm_source'),
+        utm_medium: params.get('utm_medium'),
+        utm_campaign: params.get('utm_campaign'),
+        device_type: trcDeviceType()
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+</body>
+</html>

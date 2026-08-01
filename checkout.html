@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout – The Rooted Culture™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --font-body--family:'Arimo',sans-serif; --font-heading--family:'Bevan',serif;
+    --header-bg:#4a675d; --header-text:#f1f3f3; --header-border:#608578;
+    --mint:#a1d9c6; --beige:#f5f1e8; --off-white:#f1f3f3; --grey:#608578; --light-grey:#e8edeb;
+    --primary:#283e36; --btn-bg:#283e36; --btn-text:#f1f3f3; --btn-hover-bg:#347f66;
+    --font-heading:var(--font-heading--family); --font-body:var(--font-body--family);
+  }
+  body{font-family:var(--font-body);color:#0a0f0e;background:#fff}
+  .announcement-bar{background:var(--primary);color:var(--off-white);text-align:center;padding:10px;font-size:12px;letter-spacing:1px;font-weight:500}
+  header{background:var(--header-bg);padding:0 28px;height:68px;display:flex;align-items:center;justify-content:center}
+  .logo{font-family:var(--font-body);font-size:17px;font-weight:700;color:var(--header-text);text-decoration:none}
+
+  .checkout-wrap{max-width:1000px;margin:0 auto;padding:48px 24px 96px;display:grid;grid-template-columns:1.2fr 1fr;gap:56px}
+  h1{font-family:var(--font-heading);font-size:28px;margin-bottom:24px;color:#000}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--grey);display:block;margin:14px 0 6px}
+  input,textarea{width:100%;padding:13px 14px;border:1px solid var(--light-grey);border-radius:6px;font-size:14px;font-family:var(--font-body);outline:none}
+  input:focus,textarea:focus{border-color:var(--primary)}
+  textarea{min-height:80px;resize:vertical}
+
+  .pay-btn{width:100%;margin-top:28px;padding:16px;background:var(--btn-bg);color:var(--btn-text);border:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:0.2s;border-radius:6px}
+  .pay-btn:hover{background:var(--btn-hover-bg)}
+  .pay-btn:disabled{opacity:0.6;cursor:not-allowed}
+
+  .summary{background:var(--beige);border-radius:10px;padding:28px;height:fit-content}
+  .summary h2{font-family:var(--font-heading);font-size:19px;margin-bottom:18px}
+  .cart-line{display:flex;gap:12px;margin-bottom:16px}
+  .cart-line img{width:56px;height:70px;object-fit:cover;border-radius:4px;background:var(--light-grey)}
+  .cart-line .name{font-size:13px;font-weight:600}
+  .cart-line .meta{font-size:12px;color:var(--grey)}
+  .cart-line .price{font-size:13px;font-weight:700;margin-left:auto;white-space:nowrap}
+  .summary-total{display:flex;justify-content:space-between;font-size:16px;font-weight:700;border-top:1px solid rgba(0,0,0,0.1);padding-top:16px;margin-top:16px}
+  .empty-cart{text-align:center;padding:40px 0;color:var(--grey)}
+  .empty-cart a{color:var(--primary);font-weight:700}
+
+  .status-overlay{position:fixed;inset:0;background:rgba(10,15,14,0.9);z-index:9999;display:none;align-items:center;justify-content:center;text-align:center;color:#fff;padding:24px}
+  .status-overlay.active{display:flex}
+  .status-overlay h2{font-family:var(--font-heading);font-size:26px;margin-bottom:10px}
+  .status-overlay p{font-size:14px;color:rgba(255,255,255,0.7);max-width:360px;margin:0 auto 20px}
+  .status-overlay a{display:inline-block;background:var(--mint);color:var(--primary);padding:14px 32px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:6px}
+  .spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,0.25);border-top-color:var(--mint);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 20px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .error-msg{color:#e57373;font-size:13px;margin-top:10px;display:none}
+  .error-msg.show{display:block}
+
+  @media(max-width:800px){.checkout-wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">✦ Free shipping on orders above ₹999 &nbsp;|&nbsp; New drops every Friday ✦</div>
+<header><a href="index.html" class="logo">The Rooted Culture™</a></header>
+
+<div class="checkout-wrap">
+  <div>
+    <h1>Checkout</h1>
+    <form id="checkoutForm" onsubmit="return false">
+      <label>Full Name</label>
+      <input type="text" id="custName" required>
+
+      <div class="field-row">
+        <div>
+          <label>Email</label>
+          <input type="email" id="custEmail" required>
+        </div>
+        <div>
+          <label>Phone</label>
+          <input type="tel" id="custPhone" required>
+        </div>
+      </div>
+
+      <label>Shipping Address</label>
+      <textarea id="custAddress" placeholder="House / Street, Area, Landmark" required></textarea>
+
+      <div class="field-row">
+        <div>
+          <label>City</label>
+          <input type="text" id="custCity" required>
+        </div>
+        <div>
+          <label>PIN Code</label>
+          <input type="text" id="custPin" required>
+        </div>
+      </div>
+
+      <label>State</label>
+      <input type="text" id="custState" required>
+
+      <button class="pay-btn" id="payBtn" onclick="placeOrder()">Pay & Place Order</button>
+      <div class="error-msg" id="checkoutError"></div>
+    </form>
+  </div>
+
+  <div class="summary">
+    <h2>Order Summary</h2>
+    <div id="summaryLines"></div>
+    <div style="display:flex;gap:8px;margin:16px 0 6px">
+      <input type="text" id="discountCodeInput" placeholder="Discount code" style="flex:1;padding:11px 12px;border:1px solid var(--light-grey);border-radius:6px;font-size:13px;text-transform:uppercase">
+      <button type="button" onclick="applyDiscountCode()" style="padding:0 18px;background:var(--primary);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer">Apply</button>
+    </div>
+    <div id="discountFeedback" style="font-size:12px;margin-bottom:8px"></div>
+    <div id="discountLine" style="display:none;justify-content:space-between;font-size:13px;color:var(--primary);font-weight:600;padding-top:4px"><span>Discount</span><span id="discountAmountDisplay">−₹0</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--grey);padding-top:8px"><span>Shipping</span><span id="summaryShipping">—</span></div>
+    <div class="summary-total"><span>Total</span><span id="summaryTotal">₹0</span></div>
+  </div>
+</div>
+
+<div class="status-overlay" id="statusOverlay">
+  <div id="statusContent"></div>
+</div>
+
+<script>
+  // ---- CONFIGURE THIS after deploying the backend ----
+  const API_BASE = 'https://trc-development.onrender.com';
+  // -----------------------------------------------------
+
+  let cart = JSON.parse(localStorage.getItem('trc_cart') || '[]');
+
+  function getOrCreateSessionId(){
+    let sid = sessionStorage.getItem('trc_sid');
+    if (!sid) { sid = 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,10); sessionStorage.setItem('trc_sid', sid); }
+    return sid;
+  }
+
+  function money(n){ return '₹' + Number(n).toLocaleString('en-IN'); }
+
+  let appliedDiscount = null; // { code, discountAmount, freeShipping }
+
+  function renderSummary(){
+    const linesEl = document.getElementById('summaryLines');
+    const payBtn = document.getElementById('payBtn');
+    if (!cart.length) {
+      linesEl.innerHTML = '<div class="empty-cart">Your cart is empty.<br><a href="collection.html">Browse the collection</a></div>';
+      document.getElementById('summaryTotal').textContent = money(0);
+      payBtn.disabled = true;
+      return;
+    }
+    linesEl.innerHTML = cart.map(item => `
+      <div class="cart-line">
+        <img src="${item.img}" alt="${item.name}">
+        <div>
+          <div class="name">${item.name}</div>
+          <div class="meta">Size ${item.size} · Qty ${item.qty}</div>
+        </div>
+        <div class="price">${money(item.price * item.qty)}</div>
+      </div>`).join('');
+
+    const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+    let shipping = subtotal >= 999 ? 0 : 99;
+    let discountAmount = 0;
+
+    if (appliedDiscount) {
+      discountAmount = appliedDiscount.discountAmount;
+      if (appliedDiscount.freeShipping) shipping = 0;
+      document.getElementById('discountLine').style.display = 'flex';
+      document.getElementById('discountAmountDisplay').textContent = '−' + money(discountAmount);
+    } else {
+      document.getElementById('discountLine').style.display = 'none';
+    }
+
+    const total = Math.max(0, subtotal + shipping - discountAmount);
+    document.getElementById('summaryTotal').textContent = money(total);
+    const shipLine = document.getElementById('summaryShipping');
+    if (shipLine) shipLine.textContent = shipping === 0 ? 'FREE' : money(shipping);
+  }
+  renderSummary();
+  setTimeout(function(){
+    if (cart.length && typeof trcTrackEvent === 'function') trcTrackEvent('checkout_started');
+  }, 0);
+
+  async function applyDiscountCode(){
+    const codeInput = document.getElementById('discountCodeInput');
+    const feedback = document.getElementById('discountFeedback');
+    const code = codeInput.value.trim();
+    if (!code) return;
+    feedback.style.color = 'var(--grey)';
+    feedback.textContent = 'Checking code…';
+    try {
+      const email = document.getElementById('custEmail') ? document.getElementById('custEmail').value.trim() : '';
+      const res = await fetch(API_BASE + '/api/discounts/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, items: cart, customerEmail: email || undefined })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Invalid code');
+      appliedDiscount = { code: data.code, discountAmount: data.discountAmount, freeShipping: data.freeShipping };
+      feedback.style.color = '#2e7d4f';
+      feedback.textContent = `"${data.code}" applied ✓`;
+      renderSummary();
+    } catch (err) {
+      appliedDiscount = null;
+      feedback.style.color = '#c0392b';
+      feedback.textContent = err.message || 'Invalid discount code';
+      renderSummary();
+    }
+  }
+
+  function showStatus(html){
+    document.getElementById('statusContent').innerHTML = html;
+    document.getElementById('statusOverlay').classList.add('active');
+  }
+  function hideStatus(){
+    document.getElementById('statusOverlay').classList.remove('active');
+  }
+
+  async function placeOrder(){
+    const errorEl = document.getElementById('checkoutError');
+    errorEl.classList.remove('show');
+
+    if (!cart.length) return;
+
+    const name = document.getElementById('custName').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    const city = document.getElementById('custCity').value.trim();
+    const pin = document.getElementById('custPin').value.trim();
+    const state = document.getElementById('custState').value.trim();
+
+    if (!name || !email || !phone || !address || !city || !pin || !state) {
+      errorEl.textContent = 'Please fill in every field before continuing.';
+      errorEl.classList.add('show');
+      return;
+    }
+
+    const payBtn = document.getElementById('payBtn');
+    payBtn.disabled = true;
+    payBtn.textContent = 'Placing order…';
+
+    try {
+      // 1. Create the pending order server-side
+      const orderRes = await fetch(API_BASE + '/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer: { name, email, phone },
+          items: cart,
+          shippingAddress: { address, city, pin, state },
+          session_id: getOrCreateSessionId(),
+          discount_code: appliedDiscount ? appliedDiscount.code : undefined
+        })
+      });
+      const order = await orderRes.json();
+      if (!orderRes.ok) throw new Error(order.error || 'Could not create order');
+
+      // 2. Get a Razorpay order to pay against
+      const rpRes = await fetch(API_BASE + '/api/payments/create-razorpay-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderNumber: order.order_number })
+      });
+      const rpData = await rpRes.json();
+      if (!rpRes.ok) throw new Error(rpData.error || 'Could not start payment');
+
+      // 3. Open Razorpay Checkout
+      const rzp = new Razorpay({
+        key: rpData.keyId,
+        amount: rpData.amount,
+        currency: rpData.currency,
+        order_id: rpData.razorpayOrderId,
+        name: 'The Rooted Culture™',
+        description: 'Order ' + order.order_number,
+        prefill: { name, email, contact: phone },
+        theme: { color: '#283e36' },
+        handler: function(response){
+          // Payment succeeded client-side — the webhook confirms it server-side,
+          // which is the actual source of truth for order status.
+          localStorage.removeItem('trc_cart');
+          pollOrderStatus(order.order_number);
+        },
+        modal: {
+          ondismiss: function(){
+            payBtn.disabled = false;
+            payBtn.textContent = 'Pay & Place Order';
+          }
+        }
+      });
+      rzp.on('payment.failed', function(){
+        errorEl.textContent = 'Payment failed or was cancelled. Please try again.';
+        errorEl.classList.add('show');
+        payBtn.disabled = false;
+        payBtn.textContent = 'Pay & Place Order';
+      });
+      rzp.open();
+      payBtn.textContent = 'Pay & Place Order';
+
+    } catch (err) {
+      errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+      errorEl.classList.add('show');
+      payBtn.disabled = false;
+      payBtn.textContent = 'Pay & Place Order';
+    }
+  }
+
+  async function pollOrderStatus(orderNumber, attempt){
+    attempt = attempt || 0;
+    showStatus(`
+      <div class="spinner"></div>
+      <h2>Confirming your payment…</h2>
+      <p>This usually takes a few seconds. Please don't close this page.</p>
+    `);
+
+    try {
+      const res = await fetch(API_BASE + '/api/orders/' + orderNumber);
+      const order = await res.json();
+      if (order.status && order.status !== 'pending') {
+        showStatus(`
+          <h2>Order Confirmed 🎉</h2>
+          <p>Order <strong>${orderNumber}</strong> is confirmed. A confirmation will be sent to your email shortly.</p>
+          <a href="index.html">Back to Home</a>
+        `);
+        return;
+      }
+    } catch (err) { /* keep polling */ }
+
+    if (attempt < 8) {
+      setTimeout(() => pollOrderStatus(orderNumber, attempt + 1), 2000);
+    } else {
+      showStatus(`
+        <h2>Payment Received</h2>
+        <p>We're still confirming order <strong>${orderNumber}</strong> — this can take a minute. You'll get a confirmation email once it's done. No need to pay again.</p>
+        <a href="index.html">Back to Home</a>
+      `);
+    }
+  }
+</script>
+<script>
+function trcGetSessionId(){
+  var sid = sessionStorage.getItem('trc_sid');
+  if(!sid){ sid = 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,10); sessionStorage.setItem('trc_sid', sid); }
+  return sid;
+}
+function trcDeviceType(){
+  return /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+}
+function trcTrackEvent(eventType){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    fetch(trcApiBase + '/api/analytics/event', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: trcGetSessionId(), event_type: eventType })
+    }).catch(function(){});
+  } catch(e){}
+}
+(function(){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    var sid = trcGetSessionId();
+    var params = new URLSearchParams(window.location.search);
+    fetch(trcApiBase + '/api/analytics/track', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        path: window.location.pathname.split('/').pop() || 'index.html',
+        referrer: document.referrer || null,
+        session_id: sid,
+        utm_source: params.get('utm_source'),
+        utm_medium: params.get('utm_medium'),
+        utm_campaign: params.get('utm_campaign'),
+        device_type: trcDeviceType()
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+</body>
+</html>

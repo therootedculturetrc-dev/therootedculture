@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us – The Rooted Culture™</title>
+<meta name="description" content="The story behind The Rooted Culture™ — urban streetwear rooted in culture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root {
+    --font-body--family: 'Arimo', sans-serif;
+    --font-heading--family: 'Bevan', serif;
+    --font-primary--family: 'Arimo', sans-serif;
+    --color-background: #ffffff;
+    --color-foreground: #0a0f0e;
+    --color-foreground-heading: #000000;
+    --color-primary: #283e36;
+    --color-primary-hover: #0a0f0e;
+    --color-primary-button-background: #283e36;
+    --color-primary-button-text: #f1f3f3;
+    --color-primary-button-hover-background: #347f66;
+    --header-bg: #4a675d;
+    --header-text: #f1f3f3;
+    --header-border: #608578;
+    --mint: #a1d9c6;
+    --beige: #f5f1e8;
+    --dark-bg: #121212;
+    --dark-fg: #f1f3f3;
+    --off-white: #f1f3f3;
+    --grey: #608578;
+    --light-grey: #e8edeb;
+    --bg: var(--color-background);
+    --fg: var(--color-foreground);
+    --fg-heading: var(--color-foreground-heading);
+    --primary: var(--color-primary);
+    --primary-hover: var(--color-primary-hover);
+    --btn-bg: var(--color-primary-button-background);
+    --btn-text: var(--color-primary-button-text);
+    --btn-hover-bg: var(--color-primary-button-hover-background);
+    --radius-input: 8px;
+    --font-heading: var(--font-heading--family);
+    --font-body: var(--font-body--family);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font-body);color:var(--fg);background:var(--bg);overflow-x:hidden}
+
+  .announcement-bar{background:var(--primary);color:var(--off-white);text-align:center;padding:10px;font-size:12px;letter-spacing:1px;font-weight:500}
+  header{position:sticky;top:0;z-index:1000;background:var(--header-bg);border-bottom:1px solid var(--header-border)}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;padding:0 28px;height:68px}
+  .nav-left{display:flex;align-items:center;gap:28px}
+  .nav-left a{font-size:14px;font-weight:400;text-decoration:none;color:var(--header-text);transition:color 0.2s}
+  .nav-left a:hover,.nav-left a.active{color:var(--mint)}
+  .logo{font-family:var(--font-body);font-size:17px;font-weight:700;color:var(--header-text);text-decoration:none;position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap}
+  .nav-right{display:flex;align-items:center;gap:16px}
+  .nav-right button,.nav-right a.icon-btn{background:none;border:none;cursor:pointer;font-size:13px;color:var(--header-text);display:flex;align-items:center;gap:6px;transition:color 0.2s;font-family:var(--font-body);text-decoration:none}
+  .nav-right button:hover,.nav-right a.icon-btn:hover{color:var(--mint)}
+  .nav-right svg{stroke:var(--header-text);transition:stroke 0.2s}
+  .nav-right button:hover svg,.nav-right a.icon-btn:hover svg{stroke:var(--mint)}
+  .cart-btn{position:relative}
+  .cart-count{background:var(--mint);color:var(--primary);font-size:9px;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:-8px;right:-8px;font-weight:700}
+  .rewards-badge{background:var(--mint);color:var(--primary);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;display:flex;align-items:center;gap:6px;text-decoration:none}
+  .rewards-rr{background:var(--primary);color:var(--mint);font-size:10px;font-weight:800;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+  .hamburger span{width:24px;height:2px;background:var(--header-text)}
+
+  /* ABOUT HERO */
+  .about-hero{position:relative;height:56vh;min-height:380px;background:var(--dark-bg) url('https://www.therootedculture.com/cdn/shop/files/Front_1_c_2_6d93decf-efa3-4fd8-86e1-b8c1e042ad0d.jpg?v=1778607324&width=1600') center/cover;display:flex;align-items:flex-end}
+  .about-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(3,3,3,0.75) 0%,rgba(3,3,3,0.2) 60%,transparent 100%)}
+  .about-hero-content{position:relative;z-index:2;padding:60px}
+  .about-hero-content span{color:var(--mint);font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+  .about-hero-content h1{font-family:var(--font-heading);color:#fff;font-size:clamp(40px,7vw,88px);line-height:0.95;margin-top:12px}
+
+  /* INTRO */
+  .about-intro{max-width:820px;margin:0 auto;padding:80px 24px;text-align:center}
+  .about-intro p{font-size:clamp(18px,2.4vw,26px);line-height:1.6;color:var(--fg-heading);font-weight:400}
+  .about-intro em{color:var(--primary);font-style:italic;font-weight:600}
+
+  /* EDITORIAL SPLIT — matches homepage scheme-3 editorial */
+  .editorial{display:grid;grid-template-columns:1fr 1fr;min-height:60svh;background:var(--header-bg)}
+  .editorial-media{overflow:hidden}
+  .editorial-media img{width:100%;height:100%;object-fit:cover;display:block}
+  .editorial-content{display:flex;flex-direction:column;justify-content:center;padding:60px 48px;color:var(--off-white)}
+  .editorial-content span{color:var(--mint);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .editorial-content h2{font-family:var(--font-heading);font-size:clamp(28px,3.4vw,42px);line-height:1.25;margin-bottom:18px}
+  .editorial-content p{font-size:15px;line-height:1.8;color:rgba(241,243,243,0.85)}
+  .editorial.reverse{grid-template-columns:1fr 1fr}
+  .editorial.reverse .editorial-media{order:2}
+  .editorial.reverse .editorial-content{order:1}
+  .editorial.light{background:var(--beige)}
+  .editorial.light .editorial-content{color:var(--fg)}
+  .editorial.light .editorial-content span{color:var(--primary)}
+  .editorial.light .editorial-content p{color:var(--grey)}
+
+  /* VALUES */
+  .values-section{background:var(--off-white);padding:80px 24px;text-align:center}
+  .values-section h2{font-family:var(--font-heading);font-size:clamp(28px,4vw,44px);margin-bottom:48px;color:var(--fg-heading)}
+  .values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1100px;margin:0 auto}
+  .value-card{padding:8px}
+  .value-icon{font-size:32px;margin-bottom:16px}
+  .value-card h3{font-family:var(--font-heading);font-size:19px;margin-bottom:10px;color:var(--fg-heading)}
+  .value-card p{font-size:14px;line-height:1.7;color:var(--grey)}
+
+  /* STATS */
+  .stats-bar{background:var(--primary);padding:56px 24px;display:grid;grid-template-columns:repeat(4,1fr);max-width:1200px;margin:0 auto;text-align:center}
+  .stats-bar div h3{font-family:var(--font-heading);font-size:clamp(28px,4vw,44px);color:var(--mint)}
+  .stats-bar div p{font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+
+  /* CTA */
+  .about-cta{background:var(--beige);padding:88px 24px;text-align:center}
+  .about-cta h2{font-family:var(--font-heading);font-size:clamp(30px,4.4vw,52px);margin-bottom:14px;color:var(--fg-heading)}
+  .about-cta p{font-size:15px;color:var(--grey);margin-bottom:30px}
+  .about-cta a{display:inline-block;background:var(--btn-bg);color:var(--btn-text);padding:16px 44px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:0.2s}
+  .about-cta a:hover{background:var(--btn-hover-bg)}
+
+  footer{background:var(--dark-bg);color:var(--dark-fg)}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1400px;margin:0 auto;padding:72px 24px 48px}
+  .footer-logo{font-family:var(--font-body);font-size:17px;font-weight:700;display:block;margin-bottom:16px;color:#fff}
+  .footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:260px}
+  .footer-col h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:20px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:10px}
+  .footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s}
+  .footer-col ul li a:hover{color:#fff}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:24px;text-align:center;font-size:12px;color:rgba(255,255,255,0.25)}
+
+  .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--primary);color:#fff;padding:14px 28px;font-size:13px;font-weight:600;z-index:99999;transition:transform 0.4s;white-space:nowrap;border-radius:4px}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+  .mobile-nav{position:fixed;inset:0;background:#fff;z-index:9999;transform:translateX(-100%);transition:transform 0.35s;padding:80px 32px;display:flex;flex-direction:column;gap:4px}
+  .mobile-nav.active{transform:translateX(0)}
+  .mobile-nav-close{position:absolute;top:20px;right:24px;background:none;border:none;font-size:24px;cursor:pointer}
+  .mobile-nav a{font-family:var(--font-heading);font-size:32px;text-decoration:none;color:var(--fg-heading);border-bottom:1px solid var(--light-grey);padding:16px 0;display:block}
+  .cart-btn-placeholder{display:none}
+
+  @media(max-width:900px){
+    .nav-left{display:none}.hamburger{display:flex}
+    .logo{position:static;transform:none}
+    .editorial,.editorial.reverse{grid-template-columns:1fr}
+    .editorial.reverse .editorial-media{order:1}
+    .editorial.reverse .editorial-content{order:2}
+    .footer-top{grid-template-columns:1fr 1fr}
+    .values-grid{grid-template-columns:1fr}
+    .stats-bar{grid-template-columns:1fr 1fr;gap:32px}
+  }
+  @media(max-width:600px){
+    .footer-top{grid-template-columns:1fr}
+    .about-hero-content{padding:32px 24px}
+  }
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">✦ Free shipping on orders above ₹999 &nbsp;|&nbsp; New drops every Friday ✦</div>
+
+<header>
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="index.html">Home</a>
+      <a href="collection.html">My Collection</a>
+      <a href="collections.html">Collections</a>
+      <a href="design.html">Design Your Own 🔥</a>
+    </nav>
+    <a href="index.html" class="logo">The Rooted Culture™</a>
+    <div class="nav-right">
+      <a href="#" class="rewards-badge" onclick="showToast('Rooted Rewards coming soon!');return false">
+        <span class="rewards-rr">RR</span> Rooted Rewards
+      </a>
+      <a class="icon-btn" href="search.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a class="icon-btn" href="account.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="cart-btn" onclick="showToast('Visit the shop to view your cart 🛒')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <div class="hamburger" onclick="openMobileNav()"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="collection.html">My Collection</a>
+      <a href="collections.html">Collections</a>
+  <a href="design.html">Design Your Own 🔥</a>
+  <a href="account.html">My Account</a>
+</nav>
+
+<div class="about-hero">
+  <div class="about-hero-content">
+    <span>Our Story</span>
+    <h1>Rooted in Culture.</h1>
+  </div>
+</div>
+
+<div class="about-intro">
+  <p>The Rooted Culture™ started with a simple idea: <em>your clothes should say something true about you</em> — not something borrowed. We design for the in-between moments — chaos, calm, and everything that doesn't fit a label.</p>
+</div>
+
+<div class="editorial">
+  <div class="editorial-media">
+    <img src="https://www.therootedculture.com/cdn/shop/files/ChatGPT_Image_May_17_2026_05_53_01_PM.png?v=1779020596&width=1000" alt="The Rooted Culture streetwear">
+  </div>
+  <div class="editorial-content">
+    <span>How it began</span>
+    <h2>Built on a hostel desk, not a boardroom.</h2>
+    <p>No big studio, no big budget — just a sketchbook, a few oversized blanks, and a stubborn belief that Indian streetwear could hold its own against anything from Tokyo or Seoul. Every early drop was tested on friends before it ever touched a rack.</p>
+  </div>
+</div>
+
+<div class="editorial reverse light">
+  <div class="editorial-media">
+    <img src="https://www.therootedculture.com/cdn/shop/files/ChatGPT_Image_May_25_2026_09_49_57_AM.png?v=1779682819&width=1000" alt="Design process">
+  </div>
+  <div class="editorial-content">
+    <span>What we make</span>
+    <h2>Pieces that outlast the trend cycle.</h2>
+    <p>Acid-washed tees, oversized silhouettes, ringer classics — each one designed to be worn hard and still hold its shape. We work in small batches so every print gets the attention it deserves, not the shortcuts mass production demands.</p>
+  </div>
+</div>
+
+<div class="values-section">
+  <h2>What We Stand For</h2>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">🌱</div>
+      <h3>Rooted, Not Copied</h3>
+      <p>Every design starts from something real — a phrase, a memory, a mood — never a trend we're chasing.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🧵</div>
+      <h3>Made to Last</h3>
+      <p>Heavyweight cotton, reinforced seams, colors that don't fade after the third wash.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🤝</div>
+      <h3>Small Batch, Big Care</h3>
+      <p>We print in limited runs so quality control never gets rushed — and so no drop feels mass-produced.</p>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div><h3>2024</h3><p>Founded</p></div>
+  <div><h3>25K+</h3><p>Happy Wearers</p></div>
+  <div><h3>50+</h3><p>Unique Drops</p></div>
+  <div><h3>4.8★</h3><p>Avg. Rating</p></div>
+</div>
+
+<div class="about-cta">
+  <h2>Wear the culture.</h2>
+  <p>Explore the collection or design a piece that's entirely yours.</p>
+  <a href="collection.html">Shop the Collection</a>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">The Rooted Culture™</span>
+      <p>Wear what reflects you — chaos, calm, or everything in between. Urban streetwear rooted in culture.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="collection.html">All Products</a></li>
+        <li><a href="collection.html">Oversized Tees</a></li>
+        <li><a href="collection.html">Acid Wash</a></li>
+        <li><a href="collection.html">Ringer Tees</a></li>
+        <li><a href="design.html">Design Your Own</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="account.html">My Orders</a></li>
+        <li><a href="account.html">Rooted Rewards</a></li>
+        <li><a href="account.html">Wishlist</a></li>
+        <li><a href="account.html">My Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 The Rooted Culture™. All rights reserved.</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('trc_cart') || '[]');
+document.getElementById('cartCount').textContent = cart.reduce((s,i)=>s+i.qty,0);
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+function openMobileNav(){ document.getElementById('mobileNav').classList.add('active'); }
+function closeMobileNav(){ document.getElementById('mobileNav').classList.remove('active'); }
+</script>
+<script>
+function trcGetSessionId(){
+  var sid = sessionStorage.getItem('trc_sid');
+  if(!sid){ sid = 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,10); sessionStorage.setItem('trc_sid', sid); }
+  return sid;
+}
+function trcDeviceType(){
+  return /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+}
+function trcTrackEvent(eventType){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    fetch(trcApiBase + '/api/analytics/event', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: trcGetSessionId(), event_type: eventType })
+    }).catch(function(){});
+  } catch(e){}
+}
+(function(){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    var sid = trcGetSessionId();
+    var params = new URLSearchParams(window.location.search);
+    fetch(trcApiBase + '/api/analytics/track', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        path: window.location.pathname.split('/').pop() || 'index.html',
+        referrer: document.referrer || null,
+        session_id: sid,
+        utm_source: params.get('utm_source'),
+        utm_medium: params.get('utm_medium'),
+        utm_campaign: params.get('utm_campaign'),
+        device_type: trcDeviceType()
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+</body>
+</html>

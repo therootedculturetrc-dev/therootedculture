@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found – The Rooted Culture™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --font-body--family:'Arimo',sans-serif;
+    --font-heading--family:'Bevan',serif;
+    --header-bg:#4a675d; --header-text:#f1f3f3; --header-border:#608578;
+    --mint:#a1d9c6; --beige:#f5f1e8; --dark-bg:#121212; --dark-fg:#f1f3f3;
+    --off-white:#f1f3f3; --grey:#608578; --light-grey:#e8edeb;
+    --fg:#0a0f0e; --fg-heading:#000000;
+    --primary:#283e36; --btn-bg:#283e36; --btn-text:#f1f3f3; --btn-hover-bg:#347f66;
+    --font-heading:var(--font-heading--family); --font-body:var(--font-body--family);
+  }
+  body{font-family:var(--font-body);color:var(--fg);background:var(--bg,#fff);overflow-x:hidden}
+  .announcement-bar{background:var(--primary);color:var(--off-white);text-align:center;padding:10px;font-size:12px;letter-spacing:1px;font-weight:500}
+  header{position:sticky;top:0;z-index:1000;background:var(--header-bg);border-bottom:1px solid var(--header-border)}
+  .header-inner{display:flex;align-items:center;justify-content:center;max-width:1400px;margin:0 auto;padding:0 28px;height:68px}
+  .logo{font-family:var(--font-body);font-size:17px;font-weight:700;color:var(--header-text);text-decoration:none}
+
+  .notfound-wrap{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;background:var(--beige)}
+  .notfound-wrap .code{font-family:var(--font-heading);font-size:clamp(90px,16vw,180px);line-height:1;color:var(--header-bg);letter-spacing:2px}
+  .notfound-wrap h1{font-family:var(--font-heading);font-size:clamp(22px,3vw,32px);margin:8px 0 12px;color:var(--fg-heading)}
+  .notfound-wrap p{font-size:14px;color:var(--grey);max-width:420px;margin-bottom:32px;line-height:1.7}
+  .nf-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .nf-actions a{display:inline-block;padding:14px 32px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;transition:0.2s}
+  .nf-primary{background:var(--btn-bg);color:var(--btn-text)}
+  .nf-primary:hover{background:var(--btn-hover-bg)}
+  .nf-secondary{border:1.5px solid var(--primary);color:var(--primary)}
+  .nf-secondary:hover{background:var(--primary);color:#fff}
+
+  footer{background:var(--dark-bg);color:var(--dark-fg);padding:24px;text-align:center;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="announcement-bar">✦ Free shipping on orders above ₹999 &nbsp;|&nbsp; New drops every Friday ✦</div>
+<header><div class="header-inner"><a href="index.html" class="logo" style="color:#f1f3f3">The Rooted Culture™</a></div></header>
+
+<div class="notfound-wrap">
+  <div class="code">404</div>
+  <h1>This page wandered off the rack.</h1>
+  <p>The page you're looking for doesn't exist or may have moved. Let's get you back to something wearable.</p>
+  <div class="nf-actions">
+    <a class="nf-primary" href="index.html">Back to Home</a>
+    <a class="nf-secondary" href="collection.html">Shop Collection</a>
+  </div>
+</div>
+
+<footer>© 2026 The Rooted Culture™. All rights reserved.</footer>
+<script>
+function trcGetSessionId(){
+  var sid = sessionStorage.getItem('trc_sid');
+  if(!sid){ sid = 'sid_' + Date.now() + '_' + Math.random().toString(36).slice(2,10); sessionStorage.setItem('trc_sid', sid); }
+  return sid;
+}
+function trcDeviceType(){
+  return /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop';
+}
+function trcTrackEvent(eventType){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    fetch(trcApiBase + '/api/analytics/event', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ session_id: trcGetSessionId(), event_type: eventType })
+    }).catch(function(){});
+  } catch(e){}
+}
+(function(){
+  try {
+    var trcApiBase = (typeof API_BASE !== 'undefined') ? API_BASE : 'https://trc-development.onrender.com';
+    var sid = trcGetSessionId();
+    var params = new URLSearchParams(window.location.search);
+    fetch(trcApiBase + '/api/analytics/track', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        path: window.location.pathname.split('/').pop() || 'index.html',
+        referrer: document.referrer || null,
+        session_id: sid,
+        utm_source: params.get('utm_source'),
+        utm_medium: params.get('utm_medium'),
+        utm_campaign: params.get('utm_campaign'),
+        device_type: trcDeviceType()
+      })
+    }).catch(function(){});
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
