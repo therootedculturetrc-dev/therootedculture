@@ -335,7 +335,18 @@
   .whatsapp-chat-btn{display:block;background:#25d366;color:#fff;text-align:center;padding:10px;border-radius:8px;text-decoration:none;font-size:13px;font-weight:700;transition:0.2s}
   .whatsapp-chat-btn:hover{background:#1da851}
   .whatsapp-close{position:absolute;top:8px;right:10px;background:none;border:none;font-size:16px;cursor:pointer;color:var(--grey)}
-
+  footer{background:var(--dark-bg,#121212);color:#f1f3f3;margin-top:60px}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;max-width:1400px;margin:0 auto;padding:72px 24px 48px}
+  .footer-logo{font-family:var(--font-body);font-size:17px;font-weight:700;display:block;margin-bottom:16px;color:#fff}
+  .footer-brand p{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;max-width:260px}
+  .footer-col h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint);margin-bottom:20px}
+  .footer-col ul{list-style:none}
+  .footer-col ul li{margin-bottom:10px}
+  .footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none}
+  .footer-col ul li a:hover{color:#fff}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding:24px;text-align:center;font-size:12px;color:rgba(255,255,255,0.25)}
+  @media(max-width:900px){ .footer-top{grid-template-columns:1fr 1fr} }
+  @media(max-width:600px){ .footer-top{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -352,7 +363,7 @@
     </nav>
     <a href="index.html" class="logo">The Rooted Culture™</a>
     <div class="nav-right">
-      <a href="#" class="rewards-badge" onclick="showToast('Rooted Rewards coming soon!');return false;">
+      <a href="account.html" class="rewards-badge">
         <span class="rewards-rr">RR</span> Rooted Rewards
       </a>
       <a class="icon-btn" href="search.html">
@@ -567,6 +578,43 @@
     </div>
   </div>
 </div>
+
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="footer-logo">The Rooted Culture™</span>
+      <p>Wear what reflects you — chaos, calm, or everything in between. Urban streetwear rooted in culture.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="collection.html">All Products</a></li>
+        <li><a href="collections.html">Collections</a></li>
+        <li><a href="design.html">Design Your Own</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <ul>
+        <li><a href="account.html">My Orders</a></li>
+        <li><a href="account.html">Rooted Rewards</a></li>
+        <li><a href="account.html">Wishlist</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="size-guide.html">Size Guide</a></li>
+        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+        <li><a href="refund-policy.html">Refund Policy</a></li>
+        <li><a href="shipping-policy.html">Shipping Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 The Rooted Culture™. All rights reserved.</div>
+</footer>
 
 <div class="toast" id="toast"></div>
 

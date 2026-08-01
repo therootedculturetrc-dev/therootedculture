@@ -135,7 +135,7 @@
   .product-card { background: var(--header-bg); overflow: hidden; cursor: pointer; transition: box-shadow 0.3s; position: relative; border: 1px solid transparent; }
   .product-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.1); border-color: var(--light-grey); }
   .product-img { position: relative; aspect-ratio: 3/4; overflow: hidden; background: var(--off-white); }
-  .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; transition: transform 0.5s ease; }
   .product-card:hover .product-img img { transform: scale(1.06); }
   .product-badge { position: absolute; top: 12px; left: 12px; background: var(--black); color: var(--white); font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 4px 10px; z-index: 2; }
   .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: var(--black); color: var(--white); padding: 14px; text-align: center; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; transform: translateY(100%); transition: transform 0.3s ease; cursor: pointer; border: none; width: 100%; }
@@ -226,11 +226,12 @@
     <nav class="nav-left">
       <a href="index.html">Home</a>
       <a href="collection.html" class="active">My Collection</a>
+      <a href="collections.html">Collections</a>
       <a href="design.html">Design Your Own 🔥</a>
     </nav>
     <a href="index.html" class="logo">The Rooted Culture™</a>
     <div class="nav-right">
-      <a href="#" class="rewards-badge">RR Rewards</a>
+      <a href="account.html" class="rewards-badge">RR Rewards</a>
       <a href="search.html" title="Search">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </a>
@@ -247,6 +248,7 @@
   <button class="mobile-nav-close" onclick="closeMobileNav()">✕</button>
   <a href="index.html">Home</a>
   <a href="collection.html">My Collection</a>
+  <a href="collections.html">Collections</a>
   <a href="design.html">Design Your Own 🔥</a>
 </nav>
 
@@ -271,9 +273,11 @@
     <div class="toolbar-right">
       <select class="sort-select" onchange="sortProducts(this.value)">
         <option value="featured">Featured</option>
+        <option value="newest">Newest</option>
         <option value="price-low">Price: Low to High</option>
         <option value="price-high">Price: High to Low</option>
         <option value="name-az">Name: A–Z</option>
+        <option value="name-za">Name: Z–A</option>
       </select>
     </div>
   </div>
@@ -462,7 +466,7 @@ function renderGrid(list) {
   grid.innerHTML = list.map(p => `
     <div class="product-card" onclick="goToProduct(event,p.id)">
       <div class="card-gallery">
-        <span class="card-review">★★★★★ <span class="card-review-count">(48)</span></span>
+        
         ${p.badge ? `<div class="product-badges"><span class="product-badge">${p.badge}</span></div>` : ''}
         <img src="${p.img}" alt="${p.name}" loading="lazy">
         <button class="quick-add" onclick='openModal(${JSON.stringify(p)})'>Quick Add</button>
@@ -496,6 +500,8 @@ function sortProducts(val) {
   if (val === 'price-low') sorted.sort((a,b) => a.price - b.price);
   else if (val === 'price-high') sorted.sort((a,b) => b.price - a.price);
   else if (val === 'name-az') sorted.sort((a,b) => a.name.localeCompare(b.name));
+  else if (val === 'name-za') sorted.sort((a,b) => b.name.localeCompare(a.name));
+  else if (val === 'newest') sorted.sort((a,b) => b.id - a.id);
   renderGrid(sorted);
 }
 
